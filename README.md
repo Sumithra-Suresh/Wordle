@@ -8,10 +8,10 @@ The aim of this project is to create Worlde game. Wordle gives players six chanc
 As a potential client, I want to:
 
 - [ ] See a gameboard [#1][i1]
-- [ ] Randomly generate 5 letter word [#2][i2]
-- [ ] Get the user input [#3][i3]
-- [ ] Process the user input [#4][i4]
-- [ ] Have an option to Quit or Restart the game [#5][i5]
+- [x] Randomly generate 5 letter word [#2][i2]
+- [x] Get the user input [#3][i3]
+- [x] Process the user input [#4][i4]
+- [x] Have an option to Quit or Restart the game [#5][i5]
 
 
 <!-- Issue links -->
