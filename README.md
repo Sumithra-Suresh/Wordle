@@ -9,7 +9,7 @@ As a potential client, I want to:
 
 - [ ] See a gameboard [#1][i1]
 - [x] Randomly generate 5 letter word [#2][i2]
-- [x] Get the user input [#3][i3]
+- [ ] Get the user input [#3][i3]
 - [x] Process the user input [#4][i4]
 - [x] Have an option to Quit or Restart the game [#5][i5]
 
