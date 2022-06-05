@@ -1,6 +1,8 @@
 # Wordle
 
-The aim of this project is to create Wordle game. Wordle gives players six chances to guess a randomly selected five-letter word.
+The aim of this project is to create [Wordle game](https://www.nytimes.com/games/wordle/index.html). Wordle gives players six chances to guess a randomly selected five-letter word.
+
+
 
 
 #### User Stories
