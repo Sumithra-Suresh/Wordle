@@ -31,6 +31,9 @@ function startup() {
     document.querySelector(".instructions-btn").addEventListener("click", openInstructions);
     document.querySelector(".close-btn").addEventListener("click", closeInstructions);
 
+    // add event listeners for restart new game.
+    document.querySelector(".restart-btn").addEventListener("click",startNewGame); 
+
     initBoard();
     startNewGame();
 }
@@ -224,7 +227,6 @@ function checkGuess(userInput) {
 
     if( greenCount === WORD_LENGTH ) {
         displayMessage("You Win! ");
-        startNewGame();
     }
     else{
         updateCounters();
