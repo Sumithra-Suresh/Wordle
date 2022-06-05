@@ -4,7 +4,7 @@
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <meta name="description" content="Wordle Game">
-        <title>Wordle Game</title>
+        <title>Wordle</title>
         
         <!-- Link to Font Awesome -->
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -23,41 +23,13 @@
             </div>
         </header>
         <hr class="dull--line">
-        
-        <div class="game-wrapper">
-            <div id="game-board">
-            </div>
-            <div class="input-box"> 
-                <label for="input">Guess a 5 letter word: </label>
-                <input type="text" id="input" name="input" minlength="5" maxlength="5" autocomplete="off" required>
-                <button class="enter-btn">Enter</button>
-            </div>
+        <br><br>
 
-            <div id="message"></div>
-           
-        </div>
-
-        <!-- Instruction Modal -->
-        <div class="modal" id="modal-instruction">
-            <div class="modal-content">
-                <h2 class="modal--header">How to play
-                    <span class="closeBtn">&times;</span>
-                </h2>
-                
-                <div class="instructions">
-                    <p>Guess the <strong>WORDLE</strong> in six tries.</p>
-                    <p>Each guess must be a valid five-letter word. Hit the enter button to submit.</p>
-                    <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
-                    <hr class="dull--line">
-
-                    <div class="examples">
-                        <p><strong>Examples</strong></p>
-                        <img src="./images/instructionExample.png" alt="Game example" width="300" height="300">
-                    </div>
-                    <hr class="dull--line">
-                </div>
-            </div>
-        </div>
+        <div id="game-board"></div>
+        <br><br>
+        <div id = "keyboard"></div>
+        <br><br>
+        <div id="message"></div>
 
         <script type="module" src="script.js"></script>
     </body>
