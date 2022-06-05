@@ -26,6 +26,11 @@ window.addEventListener("load", startup, false);
 //window.addEventListener("keypress",linkToGameKeyboard,false);
 
 function startup() {
+
+    // add event listeners for instructions pop-up open and close clicks
+    document.querySelector(".instructions-btn").addEventListener("click", openInstructions);
+    document.querySelector(".close-btn").addEventListener("click", closeInstructions);
+
     initBoard();
     startNewGame();
 }
@@ -318,3 +323,18 @@ function clearBoard() {
 }
 
 
+//=========================================================================================================
+// Game Instructions
+// pop up window to display the game instructions.
+//
+//=========================================================================================================
+
+function openInstructions(){
+    document.querySelector(".instructions").style.display="block";
+    document.querySelector(".container").style.display="none";
+}
+
+function closeInstructions(){
+    document.querySelector(".instructions").style.display="none";
+    document.querySelector(".container").style.display="block";
+}
