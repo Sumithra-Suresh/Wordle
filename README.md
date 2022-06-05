@@ -15,6 +15,7 @@ As a potential client, I want to:
 - [x] Process the user input [#4][i4]
 - [x] Have an option to Quit or Restart the game [#5][i5]
 - [ ] Have an option to see the game instructions. [#6][i6]
+- [ ] Have an option to toggle between light and dark mode. [#7][i7]
 
 
 <!-- Issue links -->
@@ -24,3 +25,4 @@ As a potential client, I want to:
 [i4]: https://github.com/Sumithra-Suresh/WordleWordGame/issues/4
 [i5]: https://github.com/Sumithra-Suresh/WordleWordGame/issues/5
 [i6]: https://github.com/Sumithra-Suresh/Wordle/issues/6
+[i7]: https://github.com/Sumithra-Suresh/Wordle/issues/7
