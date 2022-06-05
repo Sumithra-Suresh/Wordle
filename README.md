@@ -14,6 +14,7 @@ As a potential client, I want to:
 - [ ] Get the user input [#3][i3]
 - [x] Process the user input [#4][i4]
 - [x] Have an option to Quit or Restart the game [#5][i5]
+- [ ] Have an option to see the game instructions. [#6][i6]
 
 
 <!-- Issue links -->
@@ -22,3 +23,4 @@ As a potential client, I want to:
 [i3]: https://github.com/Sumithra-Suresh/WordleWordGame/issues/3
 [i4]: https://github.com/Sumithra-Suresh/WordleWordGame/issues/4
 [i5]: https://github.com/Sumithra-Suresh/WordleWordGame/issues/5
+[i6]: https://github.com/Sumithra-Suresh/Wordle/issues/6
