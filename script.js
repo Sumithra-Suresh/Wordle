@@ -10,9 +10,10 @@ import { WORDS } from "./words.js";
 const NUMBER_OF_GUESSES = 6;
 const WORD_LENGTH = 5;
 
-let guessedWords = [];
+let guessIndex = 0;
+let boxIndex = 0;
+let guessedString = "";
 let randomWord = " ";
-let win = false;
 
 
 //=========================================================================================================
@@ -22,44 +23,128 @@ let win = false;
 //=========================================================================================================
 
 window.addEventListener("load", startup, false);
+//window.addEventListener("keypress",linkToGameKeyboard,false);
 
 function startup() {
-
-    // add event listener for button click and 'Enter' keys in keyboard to get the input.
-    document.querySelector(".enter-btn").addEventListener('click', getUserInput, false);
-    document.getElementById("input").addEventListener("keypress", function(event) {
-        if (event.key === "Enter") {
-            event.preventDefault();
-            getUserInput();
-        }
-    });
- 
-    // add event listener to restart the game
-    document.getElementById("restart-btn").addEventListener("click",startNewGame); 
-    
-
-    // add event listeners to instruction modal
-    document.getElementById("modal-btn").addEventListener("click", openModal);
-    document.getElementsByClassName("closeBtn")[0].addEventListener("click", closeModal);
-
+    initBoard();
     startNewGame();
+}
+
+
+//=========================================================================================================
+// initBoard() will intialize the board and keyboard layout and add event listeners to the keyboard
+// 
+//
+//=========================================================================================================
+
+function initBoard() {
+
+    let board = document.querySelector("#game-board");
+
+    // create the game board - [NUMBER_OF_GUESSES * WORD_LENGTH]
+    for (let i = 0; i < NUMBER_OF_GUESSES; i++) {
+        let row = document.createElement("div")
+        row.className = "letter-row"
+        
+        for (let j = 0; j < WORD_LENGTH; j++) {
+            let box = document.createElement("div")
+            box.className = "letter-box"
+            row.appendChild(box)
+        }
+        board.appendChild(row)
+    }
+
+    // Create the keyboard
+    let keyboardElem = document.querySelector("#keyboard");
+
+    let keyboard = [
+        ["Q", "W", "E", "R", "T", "Y", "U", "I", "O", "P"],
+        ["A", "S", "D", "F", "G", "H", "J", "K", "L"],
+        ["Enter", "Z", "X", "C", "V", "B", "N", "M", "⌫" ]
+    ]; 
+
+    for(let i=0; i<keyboard.length; i++)
+    {
+        let keyboardRow = document.createElement("div");    // Create the row
+        keyboardRow.classList.add("keyboard-row");          // Add the class name
+
+        // Fill in the keyboard row elements
+        for(let j=0; j<keyboard[i].length; j++){
+
+            let keyTile = document.createElement("button"); // Create box element of button
+            keyTile.innerText = keyboard[i][j];             // Assign the value [A-Z, Enter, Backspace]
+            keyTile.classList.add("key-tile");              // Add the class name
+            keyboardRow.appendChild(keyTile);               // Append it to the parent.
+
+        }
+
+        keyboardElem.appendChild(keyboardRow);              // Attach all the keyboard rows to the parent.
+
+        // Add event listener to keyboard
+        keyboardRow.addEventListener("click", screenKeyboardKeyHandler, false );
+    }
 }
 
 //=========================================================================================================
 // startNewGame()
-// Generate a random word and reset the game board.
-//
+// Generate a random word and reset the game board for new game
+// Reset all the 
 //=========================================================================================================
 
 function startNewGame() {
 
-    randomWord = getRandomWord();   // get the random word
-    guessedWords = [];              // clear the guessed word
-    win = false;
-    clearUserInput();               // clear all fields
-    clearMsg();                    
-    clearBoard();
-    console.log(randomWord);        // For debug purpose
+    // Random words are stored as an array in a separate file.
+    randomWord = WORDS[Math.floor(Math.random() * WORDS.length)].toUpperCase();   
+    console.log(randomWord);        // For debug purpose 
+
+    guessedString = "";
+    guessIndex = 0;
+    boxIndex = 0;              
+    clearBoard(); 
+}
+
+//=========================================================================================================
+// screenKeyboardKeyHandler() - screen keyboard event handler
+// Handling same event for multiple elements. 
+// Instead of applying event to each keys, event handling is applied to the parent and 'target event property' 
+// is used to locate the child who fired that event.
+// Improvement : for better performance we can stop the event bubbling above parent. 
+//
+//=========================================================================================================
+
+function screenKeyboardKeyHandler(event){
+
+    // The event listener is attached to the parent. So we need to exclude any parent clicks.   
+    if(event.target !== event.currentTarget){   
+
+        // Find the keypressed element: alphabets, Enter or backspace key
+        let keypressed = event.target.innerHTML;
+
+        if(keypressed==="Enter"){
+            if(validateUserInput(guessedString)){   // validate User input
+                checkGuess(guessedString);          // Check the guess          
+            }
+        }
+        else if(keypressed === "⌫" ){              // remove the lastly entered character in the guessedString and letterBox.
+            if(boxIndex >0){   
+                guessedString = guessedString.slice(0,-1); // slice last character
+                document.querySelectorAll(".letter-row")[guessIndex].children[--boxIndex].innerHTML = "";
+            }
+        }
+        else{  //[A-Z]                                     
+
+            if(guessedString.length === WORD_LENGTH)
+            {
+                displayMessage("Maximun "+WORD_LENGTH+" letters!");
+            }
+            else{
+                // Update the letterBox and guessedString with the input character and increment the boxIndex counter.
+                document.querySelectorAll(".letter-row")[guessIndex].children[boxIndex++].innerHTML = keypressed;
+                guessedString += keypressed;
+            }
+        }
+
+    }
 }
 
 //=========================================================================================================
@@ -71,12 +156,8 @@ function startNewGame() {
 function validateUserInput(userInput){
 
     // Check the word length and display warning message. 
-    if (userInput.length != WORD_LENGTH) {
-        document.getElementById("message").innerHTML = "Not enough letters!";
-        setTimeout(() => {
-            clearUserInput();
-            clearMsg();
-        }, 1000);  
+    if (userInput.length < WORD_LENGTH) {
+        displayMessage("Not enough letters!");
         return false;
     }
 
@@ -88,156 +169,152 @@ function validateUserInput(userInput){
 
     if(!userInput.match(letters))
     {
-        document.getElementById("message").innerHTML = "Enter alphabets only!"
-        setTimeout(() => {
-            clearUserInput();
-            clearMsg();
-        }, 1000);
+        displayMessage("Enter alphabets only!");
         return false;
     }
 
     return true;
 }
 
-
-//=========================================================================================================
-// Reset the input fields, Message field and game board
-// 
-//
-//=========================================================================================================
-
-const clearUserInput = () => document.getElementById("input").value="";
-
-const clearMsg = () => document.getElementById("message").innerHTML = " ";
-
-const clearBoard = () => document.getElementById("game-board").innerHTML = " "; 
-
-
-//=========================================================================================================
-// getUserInput()
-//  Get and validate the user input.
-//
-//=========================================================================================================
-
-function getUserInput(){
-
-    // User allowed only 'NUMBER_OF_GUESSES' time
-    if( guessedWords.length < NUMBER_OF_GUESSES ) {
-
-        // Random words are in lowercase. So store the input in lowercase.
-        let userInput = document.getElementById("input").value.toLowerCase();
-
-        if(validateUserInput(userInput)){
-
-            // Check the input string against the random string
-            let result = checkGuess(userInput); 
-        
-            guessedWords.push(result.toUpperCase());
-
-            // display the all the guessed words in rows.
-            document.getElementById("game-board").innerHTML +=  guessedWords[guessedWords.length-1]+"<br />";
-
-            // clear user input fileds
-            clearUserInput();
-            clearMsg();
-        }
-    }   
-    else{
-        document.getElementById("message").innerHTML = "Maximum attempt reached! Nice try! ";
-
-        setTimeout(() => {
-            startNewGame();
-        }, 1000);  
-        
-    }
-
-    // Check the guessed word for winning
-    if (win) {
-        
-        document.getElementById("message").innerHTML = "You Win! "; // Display win message
-        setTimeout(() => {
-            startNewGame();
-        }, 1000); 
-        
-    }
-
-}
-
-//=========================================================================================================
-// getRandomWord()
-//  Generate random words. Random words are stored as an array in a separate file.
-//
-//=========================================================================================================
-
-function getRandomWord() {
-
-    return WORDS[Math.floor(Math.random() * WORDS.length)];
-}
-
 //=========================================================================================================
 // checkGuess()
-// Check the input string against the random string and change the letter color accordingly.
+// Check the input string against the random string and change the box color accordingly.
+// Got three different CSS class for pattern matching(present, correct and absent). 
+// Set the corresponding class names for the boxes.
 //
 //=========================================================================================================
 
 function checkGuess(userInput) {
 
-    let checkedString=[];
-    let greenCount = 0;
+    let greenCount = 0; 
+    let currentRow = document.querySelectorAll(".letter-row")[guessIndex];
+
+    // Check each character of the input word against the random word using indexOf().
+    for(let i=0; i<WORD_LENGTH; i++) {
         
-    for(let i=0; i<WORD_LENGTH; i++){
+        let charPosition = randomWord.indexOf(userInput[i]); 
+        let classname = "";
 
-        let charPosition = randomWord.indexOf(userInput[i]);
-        let color = "black";
-
-        if(charPosition === -1)
+        if(charPosition === -1) // character not in the random word.
         {
-            // character not in the random word. Mark it black
-            color = "black";
+            classname = "absent";
         }
         else{
             // Character is in the random word. Now need to match the indexes.
             if(randomWord[i] === userInput[i]){
-                color = "green";
+                classname = "correct";
                 greenCount++;
             }
             else{
-                color = "orange";
+                classname = "present";
             }
         }
-        
-        let j = userInput[i].fontcolor(color);       
-        checkedString.push(j);
+
+        // update gameboard and Keyboard with the corresponding color.
+        currentRow.children[i].classList.add(classname);
+        updateKeyboard(userInput[i], classname);
     }
-
+    
     // if all the characters are green, it is the winning word.
-    win = (greenCount===5) ? true : false;
 
-    // convert the character array to string and return.
-    return checkedString.join("");
-
+    if( greenCount === WORD_LENGTH ) {
+        displayMessage("You Win! ");
+        startNewGame();
+    }
+    else{
+        updateCounters();
+    }
 }
 
 //=========================================================================================================
-// Modal Instruction
-// pop up window to display the game instructions.
+// displayMessage()
+// Display Win or loss or any input error message 
 //
 //=========================================================================================================
 
-function openModal(){
-    let modal = document.getElementById("modal-instruction");
-    let mainContainer = document.getElementsByClassName("game-wrapper")[0];
-
-    modal.style.display="block";
-    mainContainer.style.display="none";
+function displayMessage(text){
+    document.getElementById("message").innerHTML = text;
+    setTimeout(() => {
+        document.getElementById("message").innerHTML = "";
+    }, 1500);  
 }
 
-function closeModal(){
-    let modal = document.getElementById("modal-instruction");
-    let mainContainer = document.getElementsByClassName("game-wrapper")[0];
+//=========================================================================================================
+// updateKeyboard()
+// Update the keyboard with the selected pattern color for the alphabets.
+//
+//=========================================================================================================
 
-    modal.style.display="none";
-    mainContainer.style.display="block";
+function updateKeyboard(key, classname){
+
+    let keyboardRow = document.querySelectorAll(".keyboard-row");
+
+    keyboardRow.forEach((row) => {
+
+        let keyTiles = row.childNodes;
+
+        keyTiles.forEach((tile) => {
+
+            if(tile.innerText === key){
+                tile.classList.add(classname);
+            }
+
+        });
+
+    });
+}
+
+//=========================================================================================================
+// updateCounters() 
+// Update all the counters for next guess.
+//
+//=========================================================================================================
+
+function updateCounters(){
+    // increment rowIndex. set the boxIndex to 0.
+    guessIndex++;
+    boxIndex = 0;
+    guessedString = "";
+
+    if (guessIndex >= NUMBER_OF_GUESSES)
+    {
+        displayMessage("Maximum attempt reached! Nice try! ");
+        startNewGame();
+    }
+
+}
+
+//=========================================================================================================
+// Remove all the pattern matching colors(green, yellow and gray) and set the game board and keyboard to 
+// their default classes. 
+// Clear all the innerText field in the game board.
+//
+//=========================================================================================================
+
+function clearBoard() {
+
+    // Reset game board
+    let letterBox = document.querySelectorAll(".letter-box");
+
+    letterBox.forEach( (box) => {
+        box.innerText = "";
+        box.className ='';  
+        box.className = "letter-box";
+    });
+
+    // Reset keyboard
+    let keyboardRow = document.querySelectorAll(".keyboard-row");
+
+    keyboardRow.forEach( (row) => {
+
+        let keyTiles = row.childNodes;
+
+        keyTiles.forEach( (tile) => {
+            tile.className='';
+            tile.classList.add("key-tile");
+        });
+
+    });
 }
 
 

@@ -3,23 +3,26 @@
 /*=======================================================================================*/
 
 *{
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
 body, html{    
-    background-color: white;
-    color: black;
-    font-family: Monospace, Arial, sans-serif;
-    font-size: 1rem;
-    height: 100%;
-    padding: 10px;
-    width: 100%;
+  background-color: white;
+  color: black;
+  font-family: Arial, Monospace, sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  padding: 10px;
+  height: 100%;
+  width: 100%;
 }
 
 .dull--line{
-    border-top: 1px solid  #d3d6da;;
+  width: 500px;
+  margin: 0 auto;  
+  border-top: 1px solid  #d3d6da;
 }
 
 /*=======================================================================================*/
@@ -27,94 +30,96 @@ body, html{
 /*=======================================================================================*/
 
 header{
-    align-items: center;
-    display: flex;
-    height: 50px;
-    justify-content: space-between;
-    text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  letter-spacing: 2px;
+  width: 500px;
+  height: 50px;
+  margin: 0 auto;
 }
 
 header button{
-    border: none;
+  border: none;
 }
 
 .fa-style{
-    font-size: 1.5rem;
+  font-size: 1.5rem;
 }
 
 /*=======================================================================================*/
-/*                                  game-wrapper                                         */
+/*                                  Game Board                                           */
 /*=======================================================================================*/
 
-.game-wrapper{
-    height: 90%;
-    margin: auto;
-    padding-top: 60px;
-    text-align: center;
-    width: 65%;
+#game-board {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
 }
 
-.input-box{
-    margin-top: 8rem;
+.letter-box {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.5rem;
+  font-weight: 700;
+  border-radius: 3px;
+  margin: 2px;
+  height: 3rem;
+  width: 3rem;
+  text-transform: uppercase;
+  border: 2px solid gray;
 }
 
-.enter-btn{
-    margin-top: 5rem;
-}
-
-#message{
-    margin-top: 2rem;
+.letter-row {
+  display: flex;
 }
 
 /*=======================================================================================*/
-/*                                  Modal                                                */
+/*                                  Keyboard                                             */
 /*=======================================================================================*/
 
-.modal{
-    display:none;
-    height: 95%;
-    left: 0;
-    margin-left: 35%;
-    overflow: auto;
-    position: fixed;
-    top: 60px;
-    width: 600px;
-    z-index: 1;
+#keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem 0;
+}
+  
+.keyboard-row {
+  display: flex;
+  margin: 0.5rem 0;
 }
 
-.modal-content{
-    margin: auto;
-    padding: 20px;
-    width: 100%;
+.key-tile {
+  font-size: 1rem;
+  font-weight: 700;
+  padding: 0.5rem;
+  margin: 0 2px;
+  cursor: pointer;
+  text-transform: uppercase;
 }
 
-.modal--header{
-    text-align: center;
+/*=======================================================================================*/
+/*                        Pattern match tiles                                            */
+/*=======================================================================================*/
+
+.correct {
+  background-color: #6AAA64;
+  color: white;
+  border-color: white;
 }
 
-/* Close button */
-.closeBtn{
-    float: right;
-    font-size: 1.5rem;
+.present {
+  background-color: #C9B458;
+  color: white;
+  border-color: white;
 }
 
-.closeBtn:hover, .closeBtn:focus{
-    cursor: pointer;
-    text-decoration: none;
+.absent {
+  background-color: #787C7E;
+  color: white;
+  border-color:white;
 }
-
-/* Instructions */
-
-.instructions {
-    line-height: 1.6;
-    padding: 20px;
-}
-
-.instructions > p{
-    display: block;
-    margin-top: 1em;
-    margin-bottom: 1em;
-    margin-left: 0;
-    margin-right: 0;
-}
-
