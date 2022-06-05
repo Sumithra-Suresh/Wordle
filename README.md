@@ -13,7 +13,7 @@ As a potential client, I want to:
 - [x] Randomly generate 5 letter word [#2][i2]
 - [ ] Get the user input [#3][i3]
 - [x] Process the user input [#4][i4]
-- [x] Have an option to Quit or Restart the game [#5][i5]
+- [ ] Have an option to Quit or Restart the game [#5][i5]
 - [x] Have an option to see the game instructions. [#6][i6]
 - [ ] Have an option to toggle between light and dark mode. [#7][i7]
 
