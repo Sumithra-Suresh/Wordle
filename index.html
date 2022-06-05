@@ -12,24 +12,47 @@
         <link rel="stylesheet" type="text/css" href="style.css">
     </head>
     <body>
-        <header class="header">
-            <div class="header__left-menu">
-                <button id="modal-btn"><i class="fa-solid fa-circle-question fa-style"></i></button>
-                <button id="restart-btn"><i class="fa-solid fa-power-off fa-style"></i></button>
-            </div>
-            <h1>Wordle</h1>
-            <div class="header__right--menu">
-                <button><i class="fa-solid fa-gear fa-style"></i></button>
-            </div>
-        </header>
-        <hr class="dull--line">
-        <br><br>
+        <div class ="container">
+            <header class="header">
+                <div class="header__left-menu">
+                    <button class="instructions-btn"><i class="fa-solid fa-circle-question fa-style"></i></button>
+                    <button class="restart-btn"><i class="fa-solid fa-power-off fa-style"></i></button>
+                </div>
+                <h1>Wordle</h1>
+                <div class="header__right--menu">
+                    <button><i class="fa-solid fa-gear fa-style"></i></button>
+                </div>
+            </header>
+            <hr class="dull--line">
+            <br><br>
 
-        <div id="game-board"></div>
-        <br><br>
-        <div id = "keyboard"></div>
-        <br><br>
-        <div id="message"></div>
+        
+            <div id="game-board"></div>
+            <br><br>
+            <div id = "keyboard"></div>
+            <br><br>
+            <div id="message"></div>
+        </div>
+
+        <!-- Instruction Pop-up -->
+        <div class="instructions">
+            <h2 class="instructions--header">How to play
+                <span class="close-btn">&times;</span>
+            </h2>
+            
+            <div class="instructions-wrapper">
+                <p>Guess the <strong>WORDLE</strong> in six tries.</p>
+                <p>Each guess must be a valid five-letter word. Hit the enter button to submit.</p>
+                <p>After each guess, the color of the tiles will change to show how close your guess was to the word.</p>
+                <hr class="dull--line"><br>
+
+                <div class="instructions-examples">
+                    <p><strong>Examples</strong></p><br>
+                    <img src="./images/instructionExample.png" alt="Game example" width="300" height="300">
+                </div>
+                <hr class="dull--line">
+            </div>
+        </div>
 
         <script type="module" src="script.js"></script>
     </body>

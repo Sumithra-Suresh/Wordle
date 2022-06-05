@@ -123,3 +123,46 @@ header button{
   color: white;
   border-color:white;
 }
+
+/*=======================================================================================*/
+/*                                  game-instructions                                                */
+/*=======================================================================================*/
+
+.instructions {
+  display:none;
+  height: 95%;
+  width: 500px;
+  margin: 0 auto;
+  text-align: left;
+}
+
+.instructions--header {
+  text-align: center;
+}
+
+/* Close button */
+.close-btn {
+  float: right;
+  font-size: 1.5rem;
+}
+
+.close-btn:hover, .close-btn:focus {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+/* Instructions */
+
+.instructions-wrapper {
+  line-height: 1.6;
+  padding: 20px;
+}
+
+.instructions-wrapper > p {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 1em;
+  margin-left: 0;
+  margin-right: 0;
+}
+
