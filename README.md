@@ -16,6 +16,7 @@ As a potential client, I want to:
 - [x] Have an option to Quit or Restart the game [#5][i5]
 - [x] Have an option to see the game instructions. [#6][i6]
 - [ ] Have an option to toggle between light and dark mode. [#7][i7]
+- [ ] Tooltips for menu icons
 
 
 <!-- Issue links -->
